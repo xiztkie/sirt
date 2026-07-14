@@ -35,4 +35,8 @@ return [
         ],
     ],
 
+    'wilayah' => [
+        'base_uri' => env('API_WILAYAH'),
+    ],
+
 ];

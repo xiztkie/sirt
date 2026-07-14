@@ -37,22 +37,13 @@
                         Dashboard
                     </a>
                 </li>
-
-                <!-- DATA -->
-                <li>
-                    <a href="#"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
-                        <i class="fas fa-users w-5 text-center"></i>
-                        Data Kependudukan
-                    </a>
-                </li>
                 <!-- KELUARGA DAN WARGA -->
-                <li x-data="{ open: false }">
+                <li x-data="{ open: @json(request()->routeIs('penduduk.*')) }">
                     <button @click="open = !open"
-                        class="flex items-center justify-between w-full px-3 py-2 rounded-lg hover:bg-base-200 transition">
+                        class="flex items-center justify-between w-full px-3 py-2 rounded-lg hover:bg-base-200 transition {{ request()->routeIs('penduduk.*') ? 'bg-base-200' : '' }}">
 
                         <div class="flex items-center gap-3">
-                            <i class="fas fa-home w-5 text-center"></i>
+                           <i class="fas fa-users w-5 text-center"></i>
                             Data Kependudukan
                         </div>
 
@@ -64,15 +55,15 @@
                         class="ml-6 mt-1 space-y-1 text-base-content/80">
 
                         <li>
-                            <a href="{{ route('penduduk.keluarga')}}"
-                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                            <a href="{{ route('penduduk.keluarga') }}"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition {{ request()->routeIs('penduduk.keluarga') ? 'bg-base-200 font-semibold' : '' }}">
                                 Data Keluarga
                             </a>
                         </li>
 
                         <li>
                             <a href="#"
-                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition {{ request()->routeIs('penduduk.warga') ? 'bg-base-200 font-semibold' : '' }}">
                                 Data Warga
                             </a>
                         </li>
@@ -180,12 +171,75 @@
                 </li>
 
                 <!-- SETTINGS -->
-                <li>
-                    <a href="#"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
-                        <i class="fas fa-cog w-5 text-center"></i>
-                        Pengaturan Sistem
-                    </a>
+                <li x-data="{ open: @json(request()->routeIs('datawilayah.*')) }">
+                    <button @click="open = !open"
+                        class="flex items-center justify-between w-full px-3 py-2 rounded-lg hover:bg-base-200 transition {{ request()->routeIs('datawilayah.*') ? 'bg-base-200' : '' }}">
+
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-cogs w-5 text-center"></i>
+                            Pengaturan Sistem
+                        </div>
+
+                        <i :class="open ? 'rotate-90' : ''" class="fas fa-chevron-right text-xs transition-transform"></i>
+                    </button>
+
+                    <ul x-show="open" x-transition x-cloak class="ml-6 mt-1 space-y-1 text-base-content/80">
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition {{ request()->routeIs('users*') ? 'bg-base-200 font-semibold' : '' }}">
+                                <i class="fas fa-user w-4 text-center mr-2"></i>
+                                Users
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('datawilayah.provinsi') }}"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition {{ request()->routeIs('datawilayah.provinsi') ? 'bg-base-200 font-semibold' : '' }}">
+                                <i class="fas fa-flag w-4 text-center mr-2"></i>
+                                Data Provinsi
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('datawilayah.kabkota') }}"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition {{ request()->routeIs('datawilayah.kabkota') ? 'bg-base-200 font-semibold' : '' }}">
+                                <i class="fas fa-city w-4 text-center mr-2"></i>
+                                Data Kabupaten/Kota
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('datawilayah.kecamatan') }}"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition {{ request()->routeIs('datawilayah.kecamatan') ? 'bg-base-200 font-semibold' : '' }}">
+                                <i class="fas fa-map-signs w-4 text-center mr-2"></i>
+                                Data Kecamatan
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="{{ route('datawilayah.kelurahan') }}"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition {{ request()->routeIs('datawilayah.kelurahan') ? 'bg-base-200 font-semibold' : '' }}">
+                                <i class="fas fa-home w-4 text-center mr-2"></i>
+                                Data Kelurahan/Desa
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition {{ request()->routeIs('app*') ? 'bg-base-200 font-semibold' : '' }}">
+                                <i class="fas fa-tools w-4 text-center mr-2"></i>
+                                App
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition {{ request()->routeIs('pejabat*') ? 'bg-base-200 font-semibold' : '' }}">
+                                <i class="fas fa-user-tie w-4 text-center mr-2"></i>
+                                Pejabat
+                            </a>
+                        </li>
+                    </ul>
                 </li>
 
             </ul>

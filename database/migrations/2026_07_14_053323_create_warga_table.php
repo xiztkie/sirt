@@ -32,9 +32,13 @@ return new class extends Migration
             $table->enum('tipe_warga', ['penduduk', 'non_penduduk']);
             $table->enum('status_keluarga', ['keluarga', 'individu']);
             $table->unsignedBigInteger('keluarga_id')->nullable();
+            $table->boolean('kepala_keluarga')->default(false);
             $table->string('status_hubungan')->nullable();
             $table->string('file_ktp')->nullable();
             $table->enum('status_kesejahteraan', ['mampu', 'tidak_mampu'])->default('mampu');
+            $table->enum('status', ['hidup', 'meninggal', 'pindah'])->default('hidup');
+            $table->date('tanggal_meninggal')->nullable();
+            $table->date('tanggal_pindah')->nullable();
             $table->timestamps();
         });
     }

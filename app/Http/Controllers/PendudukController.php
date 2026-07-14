@@ -9,16 +9,21 @@ class PendudukController extends Controller
 {
     public function keluarga(Request $request)
     {
-        $query = KeluargaModel::query()->join('warga', 'keluarga.id', '=', 'warga.keluarga_id');
-        $keluarga = $query->paginate(10);
-
+        $query = KeluargaModel::query();
+        if ($request->has('search')) {
+            $query->where('nama_kepala_keluarga', 'like', '%' . $request->search . '%')
+                ->orWhere('nomor_kk', 'like', '%' . $request->search . '%');
+        }
+        $keluarga = $query->paginate(8);
 
         $data = [
             'title' => 'Penduduk',
             'subtitle' => 'Keluarga',
             'active' => 'penduduk',
-            'keluarga' => $keluarga
+            'keluarga' => $keluarga,
+            'search' => $request->search
         ];
-        return view('admin.penduduk', $data);
+
+        return view('admin.datapenduduk', $data);
     }
 }

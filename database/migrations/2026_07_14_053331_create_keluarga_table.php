@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('keluarga', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_kk');
-            $table->string('nama_kepala_keluarga');
+            $table->string('nama_kepala_keluarga')->nullable();
             $table->string('alamat');
             $table->string('rt');
             $table->string('rw');
