@@ -25,18 +25,17 @@ return new class extends Migration
             $table->string('kecamatan');
             $table->string('kabupaten_kota');
             $table->string('provinsi');
-            $table->enum('agama', ['islam', 'kristen', 'katolik', 'hindu', 'buddha', 'lainnya']);
-            $table->enum('status_perkawinan', ['belum_kawin', 'kawin', 'cerai']);
+            $table->enum('agama', ['islam', 'kristen', 'konghucu', 'katolik', 'hindu', 'buddha', 'lainnya']);
+            $table->enum('status_perkawinan', ['belum_kawin', 'kawin', 'cerai mati', 'cerai hidup']);
             $table->string('pekerjaan');
             $table->enum('kewarganegaraan', ['WNI', 'WNA']);
             $table->enum('tipe_warga', ['penduduk', 'non_penduduk']);
-            $table->enum('status_keluarga', ['berkeluarga', 'individu']);
+            $table->enum('status_keluarga', ['keluarga', 'individu']);
             $table->unsignedBigInteger('keluarga_id')->nullable();
             $table->string('status_hubungan')->nullable();
             $table->string('file_ktp')->nullable();
-            $table->boolean('mampu')->default(true);
+            $table->enum('status_kesejahteraan', ['mampu', 'tidak_mampu'])->default('mampu');
             $table->timestamps();
-            $table->foreign('keluarga_id')->references('id')->on('keluarga')->onDelete('set null');
         });
     }
 

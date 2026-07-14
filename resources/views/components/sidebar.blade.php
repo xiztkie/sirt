@@ -1,75 +1,195 @@
 <aside id="layout-toggle"
-    class="overlay overlay-open:translate-x-0 drawer drawer-start inset-y-0 start-0 hidden h-full [--auto-close:lg] sm:w-75 lg:z-50 lg:block lg:translate-x-0 lg:shadow-none"
-    aria-label="Sidebar" tabindex="-1">
-    <div class="drawer-body border-base-content/20 h-full border-e p-6">
-        <button type="button" class="btn btn-text btn-square btn-xs absolute end-1 top-1 sm:hidden" aria-label="Close"
+    class="overlay overlay-open:translate-x-0 drawer drawer-start inset-y-0 start-0 hidden h-full sm:w-75 lg:z-50 lg:block lg:translate-x-0 bg-base-100 border-r border-base-content/10">
+
+    <div class="drawer-body h-full p-5 flex flex-col">
+
+        <!-- CLOSE BUTTON MOBILE -->
+        <button type="button"
+            class="btn btn-ghost btn-sm btn-circle absolute end-2 top-2 sm:hidden"
             data-overlay="#layout-toggle">
-            <span class="icon-[tabler--x] size-4"></span>
+            <i class="fas fa-times"></i>
         </button>
-        <div class="flex flex-col h-full">
-            <header class="flex items-center gap-3 mb-6">
-                <a href="#" class="flex items-center gap-3">
-                    <img src="{{ asset('assets/images/logo.png') }}" alt="{{ config('app.name', 'Sistem RT') }} logo"
-                        class="h-10 w-10 rounded-md object-cover">
-                    <div>
-                        <div class="text-lg font-semibold leading-tight">{{ config('app.name', 'Sistem RT') }}</div>
-                        <div class="text-xs text-base-content/60">Administrator</div>
-                    </div>
-                </a>
-            </header>
 
-            <nav class="flex-1 overflow-auto">
-                <ul class="menu menu-vertical">
-                    <li>
-                        <a href="#" class="flex items-center gap-3 px-3 py-2">
-                            <span class="icon-[tabler--layout-dashboard] size-5" aria-hidden="true"></span>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
+        <!-- HEADER -->
+        <header class="flex items-center gap-3 mb-8">
+            <img src="{{ asset('assets/images/logo.png') }}"
+                class="h-11 w-11 rounded-xl shadow object-cover">
 
-                    <li>
-                        <a href="#" class="flex items-center gap-3 px-3 py-2">
-                            <span class="icon-[tabler--users] size-5" aria-hidden="true"></span>
-                            <span>Data Kependudukan</span>
-                        </a>
-                    </li>
+            <div>
+                <div class="text-lg font-semibold leading-tight">
+                    {{ config('app.name', 'Sistem RT') }}
+                </div>
+                <div class="text-xs text-base-content/60">
+                    Administrator
+                </div>
+            </div>
+        </header>
 
-                    <li>
-                        <a href="#" class="flex items-center gap-3 px-3 py-2">
-                            <span class="icon-[tabler--file-description] size-5" aria-hidden="true"></span>
-                            <span>Administrasi & Surat</span>
-                        </a>
-                    </li>
+        <!-- MENU -->
+        <nav class="flex-1 overflow-y-auto pr-1">
+            <ul class="menu menu-vertical gap-1 text-sm">
 
-                    <li>
-                        <a href="#" class="flex items-center gap-3 px-3 py-2">
-                            <span class="icon-[tabler--wallet] size-5" aria-hidden="true"></span>
-                            <span>Keuangan (Kas RT)</span>
-                        </a>
-                    </li>
+                <!-- DASHBOARD -->
+                <li>
+                    <a href="{{ route('dashboard') }}"
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
+                        <i class="fas fa-chart-line w-5 text-center"></i>
+                        Dashboard
+                    </a>
+                </li>
 
-                    <li>
-                        <a href="#" class="flex items-center gap-3 px-3 py-2">
-                            <span class="icon-[tabler--heart-handshake] size-5" aria-hidden="true"></span>
-                            <span>Bansos & Kesehatan</span>
-                        </a>
-                    </li>
+                <!-- DATA -->
+                <li>
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
+                        <i class="fas fa-users w-5 text-center"></i>
+                        Data Kependudukan
+                    </a>
+                </li>
+                <!-- KELUARGA DAN WARGA -->
+                <li x-data="{ open: false }">
+                    <button @click="open = !open"
+                        class="flex items-center justify-between w-full px-3 py-2 rounded-lg hover:bg-base-200 transition">
 
-                    <li>
-                        <a href="#" class="flex items-center gap-3 px-3 py-2">
-                            <span class="icon-[tabler--calendar-event] size-5" aria-hidden="true"></span>
-                            <span>Informasi & Kegiatan</span>
-                        </a>
-                    </li>
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-home w-5 text-center"></i>
+                            Data Kependudukan
+                        </div>
 
-                    <li>
-                        <a href="#" class="flex items-center gap-3 px-3 py-2">
-                            <span class="icon-[tabler--settings] size-5" aria-hidden="true"></span>
-                            <span>Pengaturan Sistem</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </div>
+                        <i :class="open ? 'rotate-90' : ''"
+                            class="fas fa-chevron-right text-xs transition-transform"></i>
+                    </button>
+
+                    <ul x-show="open" x-transition x-cloak
+                        class="ml-6 mt-1 space-y-1 text-base-content/80">
+
+                        <li>
+                            <a href="{{ route('penduduk.keluarga')}}"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                                Data Keluarga
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                                Data Warga
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- ADMIN -->
+                <li>
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
+                        <i class="fas fa-file w-5 text-center"></i>
+                        Administrasi & Surat
+                    </a>
+                </li>
+
+                <!-- KEUANGAN -->
+                <li x-data="{ open: false }">
+                    <button @click="open = !open"
+                        class="flex items-center justify-between w-full px-3 py-2 rounded-lg hover:bg-base-200 transition">
+
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-coins w-5 text-center"></i>
+                            Keuangan
+                        </div>
+
+                        <i :class="open ? 'rotate-90' : ''"
+                            class="fas fa-chevron-right text-xs transition-transform"></i>
+                    </button>
+
+                    <ul x-show="open" x-transition x-cloak
+                        class="ml-6 mt-1 space-y-1 text-base-content/80">
+
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                                Besaran Iuran
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                                Iuran
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                                Saldo Warga
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- BPJS -->
+                <li>
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
+                        <i class="fas fa-shield-alt w-5 text-center"></i>
+                        BPJS
+                    </a>
+                </li>
+
+                <!-- PROGRAM -->
+                <li x-data="{ open: false }">
+                    <button @click="open = !open"
+                        class="flex items-center justify-between w-full px-3 py-2 rounded-lg hover:bg-base-200 transition">
+
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-hands-helping w-5 text-center"></i>
+                            Program Bantuan
+                        </div>
+
+                        <i :class="open ? 'rotate-90' : ''"
+                            class="fas fa-chevron-right text-xs transition-transform"></i>
+                    </button>
+
+                    <ul x-show="open" x-transition x-cloak
+                        class="ml-6 mt-1 space-y-1 text-base-content/80">
+
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                                Program
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#"
+                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                                Rekap Program
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- KEGIATAN -->
+                <li>
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
+                        <i class="fas fa-calendar-check w-5 text-center"></i>
+                        Informasi & Kegiatan
+                    </a>
+                </li>
+
+                <!-- SETTINGS -->
+                <li>
+                    <a href="#"
+                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
+                        <i class="fas fa-cog w-5 text-center"></i>
+                        Pengaturan Sistem
+                    </a>
+                </li>
+
+            </ul>
+        </nav>
+
     </div>
 </aside>

@@ -1,7 +1,5 @@
 <x-app-layout :title="'Dashboard RT Interaktif'">
     <div class="min-h-screen bg-slate-50 p-6 font-sans">
-
-        <!-- Header -->
         <div class="mb-8 flex justify-between items-center">
             <div>
                 <h1 class="text-3xl font-bold text-slate-800">Dashboard Rukun Tetangga</h1>
@@ -17,9 +15,7 @@
             </div>
         </div>
 
-        <!-- 1. Top Metrics (Demografi Utama) -->
         <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-            <!-- Warga -->
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 relative overflow-hidden group">
                 <div class="flex justify-between items-start">
                     <div>
@@ -38,7 +34,6 @@
                 <p class="text-xs text-emerald-600 font-medium mt-4">{{ $warga['trend'] }}</p>
             </div>
 
-            <!-- KK -->
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 relative overflow-hidden">
                 <div class="flex justify-between items-start">
                     <div>
@@ -57,7 +52,6 @@
                 <p class="text-xs text-emerald-600 font-medium mt-4">{{ $kk['trend'] }}</p>
             </div>
 
-            <!-- Lansia -->
             <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 relative overflow-hidden">
                 <div class="flex justify-between items-start">
                     <div>
@@ -75,7 +69,6 @@
                 <p class="text-xs text-slate-500 font-medium mt-4">{{ $lansia['percent'] }} (Perhatian Khusus)</p>
             </div>
 
-            <!-- JKN -->
             <div
                 class="bg-gradient-to-br from-emerald-500 to-emerald-600 rounded-2xl p-6 shadow-md relative overflow-hidden text-white">
                 <div class="absolute right-0 top-0 opacity-10">
@@ -96,10 +89,7 @@
             </div>
         </div>
 
-        <!-- 2. Operasional & Keuangan -->
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
-
-            <!-- Keuangan Kas -->
             <div
                 class="bg-white rounded-2xl p-6 shadow-sm border border-slate-100 lg:col-span-2 flex flex-col justify-between">
                 <div>
@@ -118,10 +108,7 @@
                     </div>
                 </div>
             </div>
-
-            <!-- Action Cards (Surat & Bantuan) -->
             <div class="space-y-6">
-                <!-- Permohonan Surat -->
                 <div
                     class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center justify-between">
                     <div class="flex items-center gap-4">
@@ -143,7 +130,6 @@
                     </div>
                 </div>
 
-                <!-- Program Pemerintah -->
                 <div
                     class="bg-white rounded-2xl p-5 shadow-sm border border-slate-100 flex items-center justify-between">
                     <div class="flex items-center gap-4">
@@ -168,7 +154,6 @@
             </div>
         </div>
 
-        <!-- 3. Kegiatan Terdekat -->
         <div class="bg-white rounded-2xl shadow-sm border border-slate-100 overflow-hidden">
             <div class="px-6 py-5 border-b border-slate-100 flex justify-between items-center">
                 <h3 class="text-lg font-bold text-slate-800">Kegiatan Terjadwal</h3>
