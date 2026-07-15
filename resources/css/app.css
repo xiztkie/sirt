@@ -8,7 +8,6 @@
 @import "flyonui/variants.css";
 @custom-variant dark (&:where(.dark-disabled, .dark-disabled *));
 
-/* semua placeholder italic text-sm */
 [placeholder]::placeholder {
     @apply italic text-sm;
 }

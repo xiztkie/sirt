@@ -13,7 +13,7 @@
                 <span class="icon-[tabler--plus]"></span>
                 Tambah Bangunan
             </button>
-            <form id="searchForm" action="{{ route('admin.bangunan') }}" method="GET">
+            <form id="searchForm" action="{{ route('bangunan') }}" method="GET">
                 <div class="relative w-full">
                     <input type="text" name="search" value="{{ $search ?? '' }}" placeholder="Cari bangunan..."
                         class="input input-bordered w-full pl-10" id="searchInput">
@@ -61,7 +61,7 @@
 
                             <td class="flex justify-center">
                                 <button type="button" class="btn btn-text p-1 text-red-500" aria-haspopup="dialog"
-                                    aria-expanded="false" aria-controls=
+                                    aria-expanded="false" aria-controls="hapus-modal-{{ $item->id }}">
                                 </button>
 
                                 <button type="button" class="btn btn-text p-1 text-green-500" aria-haspopup="dialog"
@@ -79,9 +79,9 @@
                 </tbody>
             </table>
         </div>
-       <div class="p-4">
-            @if(method_exists($keluarga, 'links'))
-                {{ $keluarga->appends(['search' => request('search')])->links() }}
+        <div class="p-4">
+            @if (method_exists($bangunan, 'links'))
+                {{ $bangunan->appends(['search' => request('search')])->links() }}
             @endif
         </div>
     </div>
@@ -90,83 +90,64 @@
         class="overlay modal modal-middle hidden overlay-open:opacity-100 bg-black/70 overlay-open:duration-300"
         role="dialog" tabindex="-1">
         <div class="modal-dialog modal-dialog-lg modal-dialog-centered">
-            <form action="#" method="POST" class="modal-content">
+            <form action="{{ route('bangunan.tambah') }}" method="POST" class="modal-content">
                 @csrf
                 <div class="modal-header bg-blue-200 rounded-t-md">
-                    <h3 class="modal-title text-lg font-bold">Tambah Data Keluarga</h3>
-                    <button type="button" class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+                    <h3 class="modal-title text-lg font-bold">Tambah Data Bangunan</h3>
+                    <button type="button" class="btn btn-text btn-circle btn-sm absolute inset-e-3 top-3"
                         aria-label="Close" data-overlay="#tambah-modal">
                         <span class="icon-[tabler--x] size-5"></span>
                     </button>
                 </div>
-                <div class="modal-body space-y-2 p-6">
+                <div class="modal-body space-y-4 p-6">
                     <div class="grid md:grid-cols-2 gap-4">
                         <div>
-                            <label class="label-text font-medium mb-1 block" for="nomor_kk">Nomor Kartu Keluarga</label>
-                            <input type="text" placeholder="Masukkan Nomor Kartu Keluarga..."
-                                class="input input-bordered w-full" name="nomor_kk" id="nomor_kk" required />
+                            <label class="label-text font-semibold mb-2 block" for="nomor_bangunan">Nomor
+                                Bangunan</label>
+                            <input type="text" placeholder="Masukkan nomor..."
+                                class="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                name="nomor" id="nomor_bangunan" required />
                         </div>
                         <div>
-                            <label class="label-text font-medium mb-1 block" for="namakepalakeluarga">Kepala
-                                Keluarga</label>
-                            <input type="text" placeholder="Masukkan Nama Kepala Keluarga..."
-                                class="input input-bordered w-full" name="nama_kepala_keluarga" id="namakepalakeluarga"
-                                required />
+                            <label class="label-text font-semibold mb-2 block" for="blok_bangunan">Blok</label>
+                            <input type="text" placeholder="Masukkan blok..."
+                                class="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                name="blok" id="blok_bangunan" required />
+                        </div>
+                    </div>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <div>
+                            <label class="label-text font-semibold mb-2 block" for="tipe_bangunan">Tipe Bangunan</label>
+                            <select
+                                class="select select-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                name="tipe_bangunan_id" id="tipe_bangunan" required>
+                                <option value="">Pilih tipe bangunan</option>
+                                @foreach ($tipebangunan as $tipe)
+                                    <option value="{{ $tipe->id }}">{{ $tipe->nama }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div>
+                            <label class="label-text font-semibold mb-2 block" for="pemilik">Pemilik</label>
+                            <input type="text" placeholder="Masukkan nama pemilik..."
+                                class="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                name="pemilik" id="pemilik" required />
                         </div>
                     </div>
 
                     <div>
-                        <label class="label-text font-medium mb-1 block" for="alamat">Alamat Lengkap</label>
-                        <textarea placeholder="Masukkan Alamat Lengkap..." class="textarea textarea-bordered w-full" name="alamat"
-                            id="alamat" rows="2" required></textarea>
+                        <label class="label-text font-semibold mb-2 block" for="alamat">Alamat Lengkap</label>
+                        <textarea placeholder="Masukkan alamat lengkap..."
+                            class="textarea textarea-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500" name="alamat"
+                            id="alamat" rows="3" required></textarea>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-4">
-                        <div>
-                            <label class="label-text font-medium mb-1 block" for="rt">RT</label>
-                            <input type="text" placeholder="RT" class="input input-bordered w-full" name="rt"
-                                id="rt" required />
-                        </div>
-                        <div>
-                            <label class="label-text font-medium mb-1 block" for="rw">RW</label>
-                            <input type="text" placeholder="RW" class="input input-bordered w-full"
-                                name="rw" id="rw" required />
-                        </div>
-                        <div>
-                            <label class="label-text font-medium mb-1 block" for="kode_pos">Kode Pos</label>
-                            <input type="text" placeholder="Kode Pos" class="input input-bordered w-full"
-                                name="kode_pos" id="kode_pos" required />
-                        </div>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="label-text font-medium mb-1 block"
-                                for="desa_kelurahan">Desa/Kelurahan</label>
-                            <input type="text" placeholder="Masukkan Desa/Kelurahan..."
-                                class="input input-bordered w-full" name="desa_kelurahan" id="desa_kelurahan"
-                                required />
-                        </div>
-                        <div>
-                            <label class="label-text font-medium mb-1 block" for="kecamatan">Kecamatan</label>
-                            <input type="text" placeholder="Masukkan Kecamatan..."
-                                class="input input-bordered w-full" name="kecamatan" id="kecamatan" required />
-                        </div>
-                    </div>
-
-                    <div class="grid md:grid-cols-2 gap-4">
-                        <div>
-                            <label class="label-text font-medium mb-1 block"
-                                for="kabupaten_kota">Kabupaten/Kota</label>
-                            <input type="text" placeholder="Masukkan Kabupaten/Kota..."
-                                class="input input-bordered w-full" name="kabupaten_kota" id="kabupaten_kota"
-                                required />
-                        </div>
-                        <div>
-                            <label class="label-text font-medium mb-1 block" for="provinsi">Provinsi</label>
-                            <input type="text" placeholder="Masukkan Provinsi..."
-                                class="input input-bordered w-full" name="provinsi" id="provinsi" required />
-                        </div>
+                    <div>
+                        <label class="label-text font-semibold mb-2 block" for="kontak">Kontak</label>
+                        <input type="tel" placeholder="Masukkan nomor kontak..."
+                            class="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            name="kontak" id="kontak" required />
                     </div>
                 </div>
                 <div class="modal-footer border-t border-gray-200 pt-4">
@@ -178,90 +159,82 @@
         </div>
     </div>
 
-    @foreach ($keluarga as $item)
+    @foreach ($bangunan as $item)
         <div id="edit-modal-{{ $item->id }}"
             class="overlay modal modal-middle hidden overlay-open:opacity-100 bg-black/70 overlay-open:duration-300"
             role="dialog" tabindex="-1">
             <div class="modal-dialog modal-dialog-lg modal-dialog-centered">
-                <form action="#" method="POST" class="modal-content">
+                <form action="{{ route('bangunan.edit', ['id' => encrypt($item->id)]) }}" method="POST" class="modal-content">
                     @csrf
-                    @method('PUT')
                     <div class="modal-header bg-blue-200 rounded-t-md">
-                        <h3 class="modal-title text-lg font-bold">Edit Data: {{ $item->nama_kepala_keluarga }}</h3>
-                        <button type="button" class="btn btn-text btn-circle btn-sm absolute end-3 top-3"
+                        <h3 class="modal-title text-lg font-bold">Edit Data Bangunan</h3>
+                        <button type="button" class="btn btn-text btn-circle btn-sm absolute inset-e-3 top-3"
                             aria-label="Close" data-overlay="#edit-modal-{{ $item->id }}">
                             <span class="icon-[tabler--x] size-5"></span>
                         </button>
                     </div>
-                    <div class="modal-body space-y-2 p-6">
+                    <div class="modal-body space-y-4 p-6">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="label-text font-semibold mb-2 block"
+                                    for="nomor_edit_{{ $item->id }}">Nomor Bangunan</label>
+                                <input type="text" value="{{ $item->nomor }}" placeholder="Masukkan nomor..."
+                                    class="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    name="nomor" id="nomor_edit_{{ $item->id }}" required />
+                            </div>
+                            <div>
+                                <label class="label-text font-semibold mb-2 block"
+                                    for="blok_edit_{{ $item->id }}">Blok</label>
+                                <input type="text" value="{{ $item->blok }}" placeholder="Masukkan blok..."
+                                    class="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    name="blok" id="blok_edit_{{ $item->id }}" required />
+                            </div>
+                        </div>
 
                         <div class="grid md:grid-cols-2 gap-4">
                             <div>
-                                <label class="label-text font-medium mb-1 block">Nomor Kartu Keluarga</label>
-                                <input type="text" value="{{ $item->nomor_kk }}"
-                                    class="input input-bordered w-full" name="nomor_kk" required />
+                                <label class="label-text font-semibold mb-2 block"
+                                    for="tipe_bangunan_edit_{{ $item->id }}">Tipe Bangunan</label>
+                                <select
+                                    class="select select-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    name="tipe_bangunan" id="tipe_bangunan_edit_{{ $item->id }}" required>
+                                    <option value="">Pilih tipe bangunan</option>
+                                    @foreach ($tipebangunan as $tipe)
+                                        <option value="{{ $tipe->id }}" @selected($tipe->id == $item->tipe_bangunan)>
+                                            {{ $tipe->nama }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div>
-                                <label class="label-text font-medium mb-1 block">Kepala Keluarga</label>
-                                <input type="text" value="{{ $item->nama_kepala_keluarga }}"
-                                    class="input input-bordered w-full" name="nama_kepala_keluarga" required />
+                                <label class="label-text font-semibold mb-2 block"
+                                    for="pemilik_edit_{{ $item->id }}">Pemilik</label>
+                                <input type="text" value="{{ $item->pemilik }}"
+                                    placeholder="Masukkan nama pemilik..."
+                                    class="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    name="pemilik" id="pemilik_edit_{{ $item->id }}" required />
                             </div>
                         </div>
 
                         <div>
-                            <label class="label-text font-medium mb-1 block">Alamat Lengkap</label>
-                            <textarea class="textarea textarea-bordered w-full" name="alamat" rows="2" required>{{ $item->alamat }}</textarea>
+                            <label class="label-text font-semibold mb-2 block"
+                                for="alamat_edit_{{ $item->id }}">Alamat Lengkap</label>
+                            <textarea placeholder="Masukkan alamat lengkap..."
+                                class="textarea textarea-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500" name="alamat"
+                                id="alamat_edit_{{ $item->id }}" rows="3" required>{{ $item->alamat }}</textarea>
                         </div>
 
-                        <div class="grid grid-cols-3 gap-4">
-                            <div>
-                                <label class="label-text font-medium mb-1 block">RT</label>
-                                <input type="text" value="{{ $item->rt }}"
-                                    class="input input-bordered w-full" name="rt" required />
-                            </div>
-                            <div>
-                                <label class="label-text font-medium mb-1 block">RW</label>
-                                <input type="text" value="{{ $item->rw }}"
-                                    class="input input-bordered w-full" name="rw" required />
-                            </div>
-                            <div>
-                                <label class="label-text font-medium mb-1 block">Kode Pos</label>
-                                <input type="text" value="{{ $item->kode_pos }}"
-                                    class="input input-bordered w-full" name="kode_pos" required />
-                            </div>
+                        <div>
+                            <label class="label-text font-semibold mb-2 block"
+                                for="kontak_edit_{{ $item->id }}">Kontak</label>
+                            <input type="tel" value="{{ $item->kontak }}" placeholder="Masukkan nomor kontak..."
+                                class="input input-bordered w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                name="kontak" id="kontak_edit_{{ $item->id }}" required />
                         </div>
-
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="label-text font-medium mb-1 block">Desa/Kelurahan</label>
-                                <input type="text" value="{{ $item->desa_kelurahan }}"
-                                    class="input input-bordered w-full" name="desa_kelurahan" required />
-                            </div>
-                            <div>
-                                <label class="label-text font-medium mb-1 block">Kecamatan</label>
-                                <input type="text" value="{{ $item->kecamatan }}"
-                                    class="input input-bordered w-full" name="kecamatan" required />
-                            </div>
-                        </div>
-
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="label-text font-medium mb-1 block">Kabupaten/Kota</label>
-                                <input type="text" value="{{ $item->kabupaten_kota }}"
-                                    class="input input-bordered w-full" name="kabupaten_kota" required />
-                            </div>
-                            <div>
-                                <label class="label-text font-medium mb-1 block">Provinsi</label>
-                                <input type="text" value="{{ $item->provinsi }}"
-                                    class="input input-bordered w-full" name="provinsi" required />
-                            </div>
-                        </div>
-
                     </div>
                     <div class="modal-footer border-t border-gray-200 pt-4">
                         <button type="button" class="btn btn-soft btn-secondary"
                             data-overlay="#edit-modal-{{ $item->id }}">Batal</button>
-                        <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+                        <button type="submit" class="btn btn-primary">Simpan Data</button>
                     </div>
                 </form>
             </div>
@@ -271,16 +244,15 @@
             class="overlay modal modal-middle hidden overlay-open:opacity-100 bg-black/70 overlay-open:duration-300"
             role="dialog" tabindex="-1">
             <div class="modal-dialog modal-dialog-sm modal-dialog-centered">
-                <form action="#" method="POST" class="modal-content p-6 text-center">
+                <form action="{{ route('bangunan.hapus', ['id' => encrypt($item->id)])}}" method="POST" class="modal-content p-6 text-center">
                     @csrf
-
                     <div class="flex justify-center mb-4 text-error">
                         <span class="icon-[tabler--alert-triangle] size-14"></span>
                     </div>
                     <h3 class="text-xl font-bold mb-2">Konfirmasi Hapus</h3>
                     <p class="text-sm text-gray-500 mb-6">
-                        Apakah Anda yakin ingin menghapus data keluarga
-                        <strong>{{ $item->nama_kepala_keluarga }}</strong>? Data yang dihapus tidak dapat dikembalikan.
+                        Apakah Anda yakin ingin menghapus data bangunan
+                        <strong>{{ $item->nama_bangunan }}</strong>? Data yang dihapus tidak dapat dikembalikan.
                     </p>
 
                     <div class="flex gap-3 justify-center">

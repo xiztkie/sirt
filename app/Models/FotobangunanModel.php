@@ -9,5 +9,5 @@ class FotobangunanModel extends Model
 {
     use HasFactory;
     protected $table = 'foto_bangunan';
-    protected $fillable = ['bangunan_id', 'url'];
+    protected $fillable = ['bangunan_id', 'foto'];
 }

@@ -4,16 +4,14 @@
     <div class="drawer-body h-full p-5 flex flex-col">
 
         <!-- CLOSE BUTTON MOBILE -->
-        <button type="button"
-            class="btn btn-ghost btn-sm btn-circle absolute end-2 top-2 sm:hidden"
+        <button type="button" class="btn btn-ghost btn-sm btn-circle absolute end-2 top-2 sm:hidden"
             data-overlay="#layout-toggle">
             <i class="fas fa-times"></i>
         </button>
 
         <!-- HEADER -->
         <header class="flex items-center gap-3 mb-8">
-            <img src="{{ asset('assets/images/logo.png') }}"
-                class="h-11 w-11 rounded-xl shadow object-cover">
+            <img src="{{ asset('assets/images/logo.png') }}" class="h-11 w-11 rounded-xl shadow object-cover">
 
             <div>
                 <div class="text-lg font-semibold leading-tight">
@@ -37,13 +35,44 @@
                         Dashboard
                     </a>
                 </li>
+
+                <!-- BANGUNAN -->
+                <li x-data="{ open: false }">
+                    <button @click="open = !open"
+                        class="flex items-center justify-between w-full px-3 py-2 rounded-lg hover:bg-base-200 transition">
+
+                        <div class="flex items-center gap-3">
+                            <i class="fas fa-building w-5 text-center"></i>
+                            Bangunan
+                        </div>
+
+                        <i :class="open ? 'rotate-90' : ''"
+                            class="fas fa-chevron-right text-xs transition-transform"></i>
+                    </button>
+
+                    <ul x-show="open" x-transition x-cloak class="ml-6 mt-1 space-y-1 text-base-content/80">
+
+                        <li>
+                            <a href="{{ route('bangunan')}}" class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                                Data Bangunan
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#" class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                                Peta Bangunan
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
                 <!-- KELUARGA DAN WARGA -->
                 <li x-data="{ open: @json(request()->routeIs('penduduk.*')) }">
                     <button @click="open = !open"
                         class="flex items-center justify-between w-full px-3 py-2 rounded-lg hover:bg-base-200 transition {{ request()->routeIs('penduduk.*') ? 'bg-base-200' : '' }}">
 
                         <div class="flex items-center gap-3">
-                           <i class="fas fa-users w-5 text-center"></i>
+                            <i class="fas fa-users w-5 text-center"></i>
                             Data Kependudukan
                         </div>
 
@@ -51,8 +80,7 @@
                             class="fas fa-chevron-right text-xs transition-transform"></i>
                     </button>
 
-                    <ul x-show="open" x-transition x-cloak
-                        class="ml-6 mt-1 space-y-1 text-base-content/80">
+                    <ul x-show="open" x-transition x-cloak class="ml-6 mt-1 space-y-1 text-base-content/80">
 
                         <li>
                             <a href="{{ route('penduduk.keluarga') }}"
@@ -72,8 +100,7 @@
 
                 <!-- ADMIN -->
                 <li>
-                    <a href="#"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
                         <i class="fas fa-file w-5 text-center"></i>
                         Administrasi & Surat
                     </a>
@@ -93,26 +120,22 @@
                             class="fas fa-chevron-right text-xs transition-transform"></i>
                     </button>
 
-                    <ul x-show="open" x-transition x-cloak
-                        class="ml-6 mt-1 space-y-1 text-base-content/80">
+                    <ul x-show="open" x-transition x-cloak class="ml-6 mt-1 space-y-1 text-base-content/80">
 
                         <li>
-                            <a href="#"
-                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                            <a href="#" class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
                                 Besaran Iuran
                             </a>
                         </li>
 
                         <li>
-                            <a href="#"
-                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                            <a href="#" class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
                                 Iuran
                             </a>
                         </li>
 
                         <li>
-                            <a href="#"
-                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                            <a href="#" class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
                                 Saldo Warga
                             </a>
                         </li>
@@ -121,8 +144,7 @@
 
                 <!-- BPJS -->
                 <li>
-                    <a href="#"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
                         <i class="fas fa-shield-alt w-5 text-center"></i>
                         BPJS
                     </a>
@@ -142,19 +164,16 @@
                             class="fas fa-chevron-right text-xs transition-transform"></i>
                     </button>
 
-                    <ul x-show="open" x-transition x-cloak
-                        class="ml-6 mt-1 space-y-1 text-base-content/80">
+                    <ul x-show="open" x-transition x-cloak class="ml-6 mt-1 space-y-1 text-base-content/80">
 
                         <li>
-                            <a href="#"
-                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                            <a href="#" class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
                                 Program
                             </a>
                         </li>
 
                         <li>
-                            <a href="#"
-                                class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
+                            <a href="#" class="block px-3 py-2 rounded-md hover:bg-base-200 transition">
                                 Rekap Program
                             </a>
                         </li>
@@ -163,8 +182,7 @@
 
                 <!-- KEGIATAN -->
                 <li>
-                    <a href="#"
-                        class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
+                    <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-base-200 transition">
                         <i class="fas fa-calendar-check w-5 text-center"></i>
                         Informasi & Kegiatan
                     </a>
@@ -180,7 +198,8 @@
                             Pengaturan Sistem
                         </div>
 
-                        <i :class="open ? 'rotate-90' : ''" class="fas fa-chevron-right text-xs transition-transform"></i>
+                        <i :class="open ? 'rotate-90' : ''"
+                            class="fas fa-chevron-right text-xs transition-transform"></i>
                     </button>
 
                     <ul x-show="open" x-transition x-cloak class="ml-6 mt-1 space-y-1 text-base-content/80">

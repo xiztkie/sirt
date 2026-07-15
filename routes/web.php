@@ -20,6 +20,9 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/bangunan/tambah', [BangunanController::class, 'tambahbangunan'])->name('bangunan.tambah');
     Route::post('/bangunan/edit/{id}', [BangunanController::class, 'editbangunan'])->name('bangunan.edit');
     Route::post('/bangunan/hapus/{id}', [BangunanController::class, 'hapusbangunan'])->name('bangunan.hapus');
+    Route::post('/bangunan/foto/tambah', [BangunanController::class, 'tambahfotobangunan'])->name('bangunan.foto.tambah');
+    Route::post('/bangunan/foto/hapus/{id}', [BangunanController::class, 'hapusfotobangunan'])->name('bangunan.foto.hapus');
+    Route::post('/bangunan/set-lokasi/{id}', [BangunanController::class, 'setlokasibangunan'])->name('bangunan.setlokasi');
 
     /* DATA TIPE BANGUNAN */
     Route::get('/masterdata/tipe-bangunan', [BangunanController::class, 'tipebangunan'])->name('data.tipebangunan');
