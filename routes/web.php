@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BangunanController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PendudukController;
@@ -12,6 +13,20 @@ Route::get('/captcha', [HomeController::class, 'generate'])->name('captcha.image
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
     Route::get('/penduduk/keluarga', [PendudukController::class, 'keluarga'])->name('penduduk.keluarga');
+
+    /* BANGUNAN */
+    Route::get('/bangunan', [BangunanController::class, 'bangunan'])->name('bangunan');
+    Route::get('/bangunan/{id}', [BangunanController::class, 'detailbangunan'])->name('bangunan.detail');
+    Route::post('/bangunan/tambah', [BangunanController::class, 'tambahbangunan'])->name('bangunan.tambah');
+    Route::post('/bangunan/edit/{id}', [BangunanController::class, 'editbangunan'])->name('bangunan.edit');
+    Route::post('/bangunan/hapus/{id}', [BangunanController::class, 'hapusbangunan'])->name('bangunan.hapus');
+
+    /* DATA TIPE BANGUNAN */
+    Route::get('/masterdata/tipe-bangunan', [BangunanController::class, 'tipebangunan'])->name('data.tipebangunan');
+    Route::post('/masterdata/tipe-bangunan/tambah', [BangunanController::class, 'tambahtipebangunan'])->name('data.tipebangunan.tambah');
+    Route::post('/masterdata/tipe-bangunan/edit/{id}', [BangunanController::class, 'edittipebangunan'])->name('data.tipebangunan.edit');
+    Route::post('/masterdata/tipe-bangunan/hapus/{id}', [BangunanController::class, 'hapustipebangunan'])->name('data.tipebangunan.hapus');
+
     Route::middleware(['role:admin'])->group(function () {
         /* DATA WILAYAH */
         Route::get('/data-wilayah/provinsi', [DatawilayahController::class, 'provinsi'])->name('datawilayah.provinsi');

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nik');
             $table->string('nama');
+            $table->string('kontak')->nullable();
             $table->string('tempat_lahir');
             $table->date('tanggal_lahir');
             $table->string('jenis_kelamin');
